@@ -31,3 +31,18 @@ function projnb {
     (sleep 3; open "http://$PROJ_HOST:$PROJ_PORT/") & \
         do_remotely $PROJ_HOST "localprojnb $PROJ_NAME"
 }
+
+function projnboff {
+    PROJ_NAME=$1
+    PROJ_PARTS=($(grep $PROJ_NAME ~/.stubproj_list))
+    if [ -z $PROJ_PARTS ]; then
+        echo "Couldn't find $PROJ_NAME in ~/.stubproj_list"
+        return
+    fi
+    PROJ_HOST=${PROJ_PARTS[1]}
+    PROJ_PORT=${PROJ_PARTS[2]}
+    echo "PROJ_HOST=$PROJ_HOST"
+    echo "PROJ_PORT=$PROJ_PORT"
+
+    do_remotely $PROJ_HOST "localprojnboff $PROJ_NAME"
+}

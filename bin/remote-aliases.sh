@@ -44,3 +44,29 @@ function localprojnb {
         circusd --daemon ./circus/circus.ini
     fi
 }
+
+function localprojnboff {
+    if [ -z $1 ]; then
+        echo "usage: localprojnboff PROJ_NAME"
+        return
+    fi
+    PROJ_NAME="$1"
+    if [ ! -e ~/workspace/"$PROJ_NAME" ]; then
+        echo "No workspace link to project '$PROJ_NAME'"
+        return
+    fi
+
+    localproj "$PROJ_NAME"
+    if [ -e ./circus/notebook.pid ]; then
+        pid=`cat ./circus/notebook.pid`
+        has_pid=1
+    else
+        has_pid=0
+    fi
+    if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
+        kill $pid
+    else
+        rm -f ./circus/notebook.pid
+        echo "Notebook for $PROJ_NAME was not running"
+    fi
+}
