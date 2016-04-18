@@ -32,8 +32,8 @@ function localprojnb {
     fi
 
     localproj "$PROJ_NAME"
-    if [ -e ./notebook.pid ]; then
-        pid=`cat ./notebook.pid`
+    if [ -e ./circus/notebook.pid ]; then
+        pid=`cat ./circus/notebook.pid`
         has_pid=1
     else
         has_pid=0
@@ -41,6 +41,6 @@ function localprojnb {
     if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
         echo "Notebook for $PROJ_NAME already started as PID $pid"
     else
-        jupyter notebook --config=./jupyter_notebook_config
+        circusd --daemon ./circus/circus.ini
     fi
 }

@@ -47,8 +47,14 @@ cp -R "$DIR/../skel/"* "$PROJ_DIR/"
 cd "$PROJ_DIR"
 
 conda create -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+
+conda run -n $PROJ_NAME -- pip install circus
+conda run -n $PROJ_NAME -- python3 "./populate_circus.py" "$PROJ_DIR"
+rm ./populate_circus.py
+
 conda run -n $PROJ_NAME -- python3 "./populate_jupyter_notebook_config.py" $PORT
 rm ./populate_jupyter_notebook_config.py
+
 git init .
 
 echo "Okay, all set in $PROJ_DIR"
