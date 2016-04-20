@@ -42,6 +42,7 @@ function localprojnb {
         echo "Notebook for $PROJ_NAME already started as PID $pid"
     else
         circusd --daemon ./circus/circus.ini
+        sleep 2
         echo "Started notebook for $PROJ_NAME (pid: $(cat ./circus/notebook.pid))"
     fi
 }
