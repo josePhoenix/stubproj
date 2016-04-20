@@ -67,6 +67,7 @@ function localprojnboff {
     fi
     if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
         kill $pid
+        echo "Stopped notebook for $PROJ_NAME"
     else
         rm -f ./circus/notebook.pid
         echo "Notebook for $PROJ_NAME was not running"
