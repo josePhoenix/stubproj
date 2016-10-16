@@ -1,4 +1,4 @@
-source ~/.stubproj/common.sh
+source ~/.stubproj/bin/common.sh
 
 function localproj {
     if [ -z $1 ]; then

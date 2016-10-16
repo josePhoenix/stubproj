@@ -1,4 +1,4 @@
-source ~/.stubproj/common.sh
+source ~/.stubproj/bin/common.sh
 
 function do_remotely {
     host=$1
