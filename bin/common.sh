@@ -20,11 +20,11 @@ function set_from_proj_name {
     echo "PROJ_HOST" $PROJ_HOST
     echo "PROJ_DIR" $PROJ_DIR
     echo "PROJ_NAME" $PROJ_NAME
-    echo "PORT" $PORT
+    echo "PROJ_PORT" $PROJ_PORT
 }
 
 function show_usage() {
-    echo "stubproj PROJ_NAME PROJ_HOST PROJ_DIR PORT"
+    echo "stubproj PROJ_NAME PROJ_HOST PROJ_DIR PROJ_PORT"
     echo
     echo "Example:"
     echo "stubproj newproj science6 /grp/jwst/myfolder 9900"

@@ -32,12 +32,12 @@ function stubproj {
     PROJ_NAME="$1"
     PROJ_HOST=$(resolve_to_ip "$2")
     PROJ_DIR="$3"
-    PORT="$4"
+    PROJ_PORT="$4"
 
     echo "PROJ_HOST=" $PROJ_HOST
     echo "PROJ_DIR=" $PROJ_DIR
     echo "PROJ_NAME=" $PROJ_NAME
-    echo "PORT=" $PORT
+    echo "PROJ_PORT=" $PROJ_PORT
 
     do_remotely $PROJ_HOST "stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
 }
