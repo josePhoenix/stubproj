@@ -13,10 +13,6 @@ function set_from_proj_name {
     PROJ_HOST=${PROJ_PARTS[1]}
     PROJ_DIR=${PROJ_PARTS[2]}
     PROJ_PORT=${PROJ_PARTS[3]}
-    echo "PROJ_HOST" $PROJ_HOST
-    echo "PROJ_DIR" $PROJ_DIR
-    echo "PROJ_NAME" $PROJ_NAME
-    echo "PROJ_PORT" $PROJ_PORT
 }
 
 function show_usage() {

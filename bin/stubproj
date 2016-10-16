@@ -18,11 +18,6 @@ PROJ_HOST="$2"
 PROJ_DIR="$3"
 PROJ_PORT="$4"
 
-echo "PROJ_HOST=" $PROJ_HOST
-echo "PROJ_DIR=" $PROJ_DIR
-echo "PROJ_NAME=" $PROJ_NAME
-echo "PROJ_PORT=" $PROJ_PORT
-
 # Setting up a computing environment on a remote server
 mkdir -p "$PROJ_DIR"
 for subdir in data notebooks output scratch; do

@@ -40,7 +40,7 @@ Add a line sourcing the *remote* aliases to your `.bashrc`:
 
     stubproj PROJ_HOST PROJ_DIR PROJ_NAME PORT
 
-Example creating a project `newproj` on `myserver` rooted at `/grp/jwst/myfolder` and with a notebook server on port 9900.
+Example creating a project `newproj` on `myfavoritehost` rooted at `/grp/jwst/myfolder` and with a notebook server on port 9900.
 
     local$ stubproj newproj myserver /grp/jwst/myfolder 9900
 
@@ -83,3 +83,21 @@ Start the notebook server without opening a browser window:
     prepending /home/me/miniconda3/envs/newproj/bin to PATH
     Started notebook for newproj (pid: 3555)
     myfavoritehost$
+
+### Deleting `newproj`
+
+Save all your work and copy it into a different project (if you want).
+
+Shut down the notebook server:
+
+    local$ projnboff newproj
+    Doing command: localprojnboff newproj on host: 10.0.0.1
+    Stopped notebook for newproj
+    Connection to 130.167.200.6 closed.
+
+To delete `newproj`, edit `~/.stubproj/projects` on both your local machine and `myfavoritehost` to remove the corresponding line.
+
+To destroy the files, remove the environment and `rm` the folder from `myfavoritehost`:
+
+    myfavoritehost$ conda env remove -n newproj --yes
+    myfavoritehost$ rm -r /grp/jwst/myfolder
