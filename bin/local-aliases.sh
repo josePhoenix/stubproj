@@ -15,7 +15,8 @@ function proj {
 function projnb {
     set_from_proj_name $1
     do_remotely $PROJ_HOST "localprojnb $PROJ_NAME" &&
-    open "http://$PROJ_HOST:$PROJ_PORT/"
+    open "http://$PROJ_HOST:$PROJ_PORT/" &&
+    echo "Opened a browser pointing at notebook running at http://$PROJ_HOST:$PROJ_PORT/"
 }
 
 function projnboff {
