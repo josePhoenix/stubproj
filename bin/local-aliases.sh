@@ -40,6 +40,7 @@ function stubproj {
     echo "PROJ_PORT=" $PROJ_PORT
 
     do_remotely $PROJ_HOST "stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
+    touch ~/.stubproj/projects
     if [ $(grep $PROJ_NAME ~/.stubproj/projects | wc -l) != 0 ]; then
         echo "Name already present in ~/.stubproj/projects locally:"
         echo $(grep $PROJ_NAME ~/.stubproj/projects)
