@@ -37,8 +37,8 @@ function localprojnb {
     if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
         echo "Notebook for $PROJ_NAME already started as PID $pid"
     else
-        circusd --daemon ./circus/circus.ini
-        sleep 2
+        circusd --daemon ./circus/circus.ini && 
+        sleep 2 &&
         echo "Started notebook for $PROJ_NAME (pid: $(cat ./circus/notebook.pid))"
     fi
 }
@@ -59,8 +59,7 @@ function localprojnboff {
         has_pid=0
     fi
     if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
-        kill $pid
-        echo "Stopped notebook for $PROJ_NAME"
+        kill $pid && echo "Stopped notebook for $PROJ_NAME"
     else
         rm -f ./circus/notebook.pid
         echo "Notebook for $PROJ_NAME was not running"
