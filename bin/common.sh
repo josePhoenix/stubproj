@@ -1,7 +1,3 @@
-function resolve_to_ip {
-    echo $(host $1 | awk '/has address/ { print $4 ; exit }')
-}
-
 function set_from_proj_name {
     PROJ_NAME=$1
     if [ -z $PROJ_NAME ]; then

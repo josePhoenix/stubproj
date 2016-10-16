@@ -14,8 +14,8 @@ function proj {
 
 function projnb {
     set_from_proj_name $1
-    (sleep 3; open "http://$PROJ_HOST:$PROJ_PORT/") & \
-        do_remotely $PROJ_HOST "localprojnb $PROJ_NAME"
+    do_remotely $PROJ_HOST "localprojnb $PROJ_NAME" &&
+    open "http://$PROJ_HOST:$PROJ_PORT/"
 }
 
 function projnboff {
@@ -29,7 +29,7 @@ function stubproj {
         return 1
     fi
     PROJ_NAME="$1"
-    PROJ_HOST=$(resolve_to_ip "$2")
+    PROJ_HOST="$2"
     PROJ_DIR="$3"
     PROJ_PORT="$4"
 

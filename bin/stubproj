@@ -14,7 +14,7 @@ if [ -z $(which conda) ]; then
 fi
 
 PROJ_NAME="$1"
-PROJ_HOST=$(resolve_to_ip "$2")
+PROJ_HOST="$2"
 PROJ_DIR="$3"
 PROJ_PORT="$4"
 
