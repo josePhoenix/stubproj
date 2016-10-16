@@ -4,6 +4,7 @@ function set_from_proj_name {
         echo "You must supply the project name as an argument"
         return
     fi
+    # TODO this will fail if the project name is a substring of another
     PROJ_PARTS=($(grep $PROJ_NAME ~/.stubproj/projects))
     if [ -z $PROJ_PARTS ]; then
         echo "Couldn't find $PROJ_NAME in ~/.stubproj/projects"

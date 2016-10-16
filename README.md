@@ -38,7 +38,7 @@ Add a line sourcing the *remote* aliases to your `.bashrc`:
 
 ### Create a new project
 
-    stubproj PROJ_HOST PROJ_DIR PROJ_NAME PORT
+    stubproj PROJ_NAME PROJ_HOST PROJ_DIR PROJ_PORT
 
 Example creating a project `newproj` on `myfavoritehost` rooted at `/grp/jwst/myfolder` and with a notebook server on port 9900.
 
@@ -46,7 +46,20 @@ Example creating a project `newproj` on `myfavoritehost` rooted at `/grp/jwst/my
 
 Follow the instructions provided to configure a password and add `newproj` to your `~/.stubproj_list` on your **local** machine:
 
-    local$ echo "newproj myfavoritehost 9900" >> ~/.stubproj/projects
+    local$ echo "newproj myserver /grp/jwst/myfolder 9900" >> ~/.stubproj/projects
+
+### Create a new project with a different set of default packages
+
+Stubproj will check if a `conda` env already exists, and install the packages it needs into that. This means you can set up the environment yourself.
+
+For example, the LSST stack is [available as conda packages](https://pipelines.lsst.io/install/conda.html), but currently stuck on Python 2 (Fall 2016). Make an `lsst` environment:
+
+    myfavoritehost$ conda config --add channels http://conda.lsst.codes/stack
+    myfavoritehost$ conda create --name lsst python=2 lsst-distrib lsst-sims
+
+Create a project skeleton with the same name:
+
+    local$ stubproj lsst myfavoritehost /astro/lsst 9901
 
 ### Working on `newproj` from a local terminal
 
