@@ -3,14 +3,13 @@ source ~/.stubproj/bin/common.sh
 function do_remotely {
     host=$1
     command=$2
-    # echo "PROJ_HOST=$PROJ_HOST"
     echo "Doing command:" $command "on host:" $host
-    ssh "$host" -t "bash --rcfile <(echo '. ~/.bashrc; $command')"
+    ssh "$host" -t "bash --rcfile <(echo '. ~/.bashrc; $command && exit 0')"
 }
 
 function proj {
     set_from_proj_name $1
-    do_remotely $PROJ_HOST "localproj $PROJ_NAME"
+    ssh "$PROJ_HOST" -t "bash --rcfile <(echo '. ~/.bashrc; localproj $PROJ_NAME')"
 }
 
 function projnb {
@@ -39,9 +38,7 @@ function stubproj {
     echo "PROJ_NAME=" $PROJ_NAME
     echo "PROJ_PORT=" $PROJ_PORT
 
-    command="stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
-
-    ssh "$PROJ_HOST" -t "bash --rcfile <(echo '. ~/.bashrc; $command && exit 0')"
+    do_remotely $PROJ_HOST "stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
     
     touch ~/.stubproj/projects
     if [ $(grep $PROJ_NAME ~/.stubproj/projects | wc -l) != 0 ]; then
