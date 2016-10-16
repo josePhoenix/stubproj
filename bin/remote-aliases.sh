@@ -38,7 +38,7 @@ function localprojnb {
         echo "Notebook for $PROJ_NAME already started as PID $pid"
     else
         circusd --daemon ./circus/circus.ini && echo "Starting circus to run the notebook..."
-        while ! nc -q 1 localhost $PROJ_PORT </dev/null; do sleep 2; done
+        while netstat -lnt | awk '$4 ~ /:'"$PROJ_PORT"'$/ {exit 1}'; do sleep 2; done
         echo "Started notebook for $PROJ_NAME (pid: $(cat ./circus/notebook.pid))"
     fi
 }
