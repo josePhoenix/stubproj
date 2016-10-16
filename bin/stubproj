@@ -49,8 +49,6 @@ rm ./populate_circus.py
 python3 "./populate_jupyter_notebook_config.py" $PROJ_PORT
 rm ./populate_jupyter_notebook_config.py
 
-source deactivate $PROJ_NAME
-
 if [ ! -d ./.git ]; then
     git init .
 fi
@@ -67,6 +65,3 @@ else
     echo $project_spec >> ~/.stubproj/projects
 fi
 echo "Done!"
-if [[ "$5" == "--exit" ]]; then
-    exit 0
-fi

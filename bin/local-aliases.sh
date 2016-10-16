@@ -39,7 +39,10 @@ function stubproj {
     echo "PROJ_NAME=" $PROJ_NAME
     echo "PROJ_PORT=" $PROJ_PORT
 
-    do_remotely $PROJ_HOST "stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
+    command="stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
+
+    ssh "$PROJ_HOST" -t "bash --rcfile <(echo '. ~/.bashrc; $command && exit 0')"
+    
     touch ~/.stubproj/projects
     if [ $(grep $PROJ_NAME ~/.stubproj/projects | wc -l) != 0 ]; then
         echo "Name already present in ~/.stubproj/projects locally:"
