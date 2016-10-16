@@ -67,4 +67,4 @@ function localprojnboff {
     fi
 }
 
-alias stubproj="$(HOME)/.stubproj/bin/stubproj"
+alias stubproj="$HOME/.stubproj/bin/stubproj"
