@@ -60,36 +60,10 @@ project_spec="$PROJ_NAME $(hostname) $PROJ_DIR $PROJ_PORT"
 echo "Okay, all set in $PROJ_DIR"
 touch ~/.stubproj/projects
 if [ $(grep $PROJ_NAME ~/.stubproj/projects | wc -l) != 0 ]; then
-    echo "Line already present in ~/.stubproj/projects on $PROJ_HOST:"
+    echo "Line already present in ~/.stubproj/projects on $(hostname):"
     echo $project_spec
 else
     echo "Appending a line to ~/.stubproj/projects on $PROJ_HOST:"
     echo $project_spec >> ~/.stubproj/projects
 fi
 echo "Done!"
-
-# create conda env
-# install jupyter notebook, ipywidgets, astropy
-# (is there something like requirements.txt?)
-# notebooks/
-# data/
-# output/
-# scratch/
-#
-# create password and cert
-#
-# proj_go
-# proj_nb
-#
-# shell alias - on server
-#    source activate envname
-#    cd proj root
-#    pid = `cat $PROJDIR/notebook.pid`
-#    if [ ! -e /proc/$pid -a /proc/$pid/exe ]; then
-#       /do/thing.py &
-#       echo $! > $PROJDIR/notebook.pid
-#    else
-#
-#
-# shell alias - local
-#    (sleep 1; open http://host:port/) & ssh remotehost "go_lsst"
