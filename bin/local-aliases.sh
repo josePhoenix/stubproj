@@ -1,48 +1,42 @@
+source ~/.stubproj/common.sh
+
 function do_remotely {
-    PROJ_HOST=$1
-    CMD=$2
-    echo "PROJ_HOST=$PROJ_HOST"
-    ssh "$PROJ_HOST" -t "bash --rcfile <(echo '. ~/.bashrc; $CMD')"
+    host=$1
+    command=$2
+    # echo "PROJ_HOST=$PROJ_HOST"
+    ssh "$host" -t "bash --rcfile <(echo '. ~/.bashrc; $command')"
 }
 
 function proj {
-    PROJ_NAME=$1
-    PROJ_PARTS=($(grep $PROJ_NAME ~/.stubproj_list))
-    if [ -z $PROJ_PARTS ]; then
-        echo "Couldn't find $PROJ_NAME in ~/.stubproj_list"
-        return
-    fi
-    PROJ_HOST=${PROJ_PARTS[1]}
+    set_from_proj_name $1
     do_remotely $PROJ_HOST "localproj $PROJ_NAME"
 }
 
 function projnb {
-    PROJ_NAME=$1
-    PROJ_PARTS=($(grep $PROJ_NAME ~/.stubproj_list))
-    if [ -z $PROJ_PARTS ]; then
-        echo "Couldn't find $PROJ_NAME in ~/.stubproj_list"
-        return
-    fi
-    PROJ_HOST=${PROJ_PARTS[1]}
-    PROJ_PORT=${PROJ_PARTS[2]}
-    echo "PROJ_HOST=$PROJ_HOST"
-    echo "PROJ_PORT=$PROJ_PORT"
-
+    set_from_proj_name $1
     (sleep 3; open "http://$PROJ_HOST:$PROJ_PORT/") & \
         do_remotely $PROJ_HOST "localprojnb $PROJ_NAME"
 }
 
 function projnboff {
-    PROJ_NAME=$1
-    PROJ_PARTS=($(grep $PROJ_NAME ~/.stubproj_list))
-    if [ -z $PROJ_PARTS ]; then
-        echo "Couldn't find $PROJ_NAME in ~/.stubproj_list"
-        return
-    fi
-    PROJ_HOST=${PROJ_PARTS[1]}
-    PROJ_PORT=${PROJ_PARTS[2]}
-    echo "PROJ_HOST=$PROJ_HOST"
-    echo "PROJ_PORT=$PROJ_PORT"
-
+    set_from_proj_name $1
     do_remotely $PROJ_HOST "localprojnboff $PROJ_NAME"
+}
+
+function stubproj {
+    if [ "$#" -ne 4 ]; then
+        show_usage
+        exit 1
+    fi
+    PROJ_HOST=$(resolve_to_ip "$1")
+    PROJ_DIR="$2"
+    PROJ_NAME="$3"
+    PORT="$4"
+
+    echo "PROJ_HOST=" $PROJ_HOST
+    echo "PROJ_DIR=" $PROJ_DIR
+    echo "PROJ_NAME=" $PROJ_NAME
+    echo "PORT=" $PORT
+
+    do_remotely $PROJ_HOST "stubproj $@"
 }

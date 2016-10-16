@@ -1,25 +1,19 @@
 #!/bin/bash
 set -euo pipefail
 
-# Answer to "Can a Bash script tell what directory it's stored in?"
-# http://stackoverflow.com/a/246128/421355
-
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-
 function show_usage() {
-    echo "stubproj PROJ_DIR PROJ_NAME PORT"
+    echo "stubproj PROJ_NAME PROJ_HOST PROJ_DIR PORT"
     echo
     echo "Example:"
-    echo "stubproj /grp/jwst/myfolder newproj 9900"
+    echo "stubproj newproj science6 /grp/jwst/myfolder 9900"
 }
 
-if [ "$#" -ne 3 ]; then
+function resolve_to_ip {
+    result = $(getent hosts "$1" | awk '{ print $1 }')
+    echo $result
+}
+
+if [ "$#" -ne 4 ]; then
     show_usage
     exit 1
 fi
@@ -29,9 +23,15 @@ if [ -z $(which conda) ]; then
     exit 1
 fi
 
-PROJ_DIR="$1"
-PROJ_NAME=$2
-PORT=$3
+PROJ_HOST=$(resolve_to_ip "$1")
+PROJ_DIR="$2"
+PROJ_NAME="$3"
+PORT="$4"
+
+echo "PROJ_HOST=" $PROJ_HOST
+echo "PROJ_DIR=" $PROJ_DIR
+echo "PROJ_NAME=" $PROJ_NAME
+echo "PORT=" $PORT
 
 # Setting up a computing environment on a remote server
 mkdir -p "$PROJ_DIR"
@@ -57,21 +57,23 @@ rm ./populate_jupyter_notebook_config.py
 
 git init .
 
+project_spec="$PROJ_NAME $(hostname) $PROJ_DIR $PORT"
+
 echo "Okay, all set in $PROJ_DIR"
-echo "Appending a line to ~/.stubproj_list"
-echo "$PROJ_NAME $(hostname) $PORT" >> ~/.stubproj_list
+echo "Appending a line to ~/.stubproj/projects"
+echo $project_spec >> ~/.stubproj/projects
 echo
-echo "Add this line to ~/.stubproj_list on machines where you want to connect to this environment:"
+echo "Add this line to ~/.stubproj/projects on machines where you want to connect to this environment:"
 echo
-echo "$PROJ_NAME $(hostname) $PORT"
+echo $project_spec
 echo
 echo "If you haven't set up the shell aliases for this (remote) machine, add them to your bash startup files:"
 echo
-echo "echo \"source $DIR/remote-aliases.sh\" >> ~/.bashrc"
+echo "echo \"source ~/.stubproj/bin/remote-aliases.sh\" >> ~/.bashrc"
 echo
 echo "If you haven't set up the shell aliases for your (local) machine, add them to your bash startup files:"
 echo
-cat "$DIR/local-aliases.sh"
+cat ~/.stubproj/bin/local-aliases.sh
 echo
 echo "Done!"
 

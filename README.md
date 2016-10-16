@@ -8,38 +8,45 @@ As with most things built naively around Jupyter, this is pretty insecure. Use i
 
 ## Installation
 
-### On any remote hosts (servers) that you work with regularly
-
-  * Clone this repository somewhere.
-  * Ensure `conda` is installed and available on the $PATH
-  * Add a line to your `.bashrc`:
-  
-      source /path/to/this/repo/bin/remote-aliases.sh
-  * Add a symbolic link to `stubproj` somewhere on your $PATH
-  
-      ln -s /path/to/this/repo/bin/stubproj ~/bin/stubproj
-
 ### On your own (local) machine
 
-  * Clone this repository somewhere.
+  * Clone this repository into ~/.stubproj
+  
+      git clone https://github.com/josePhoenix/stubproj.git ~/.stubproj
+
   * Add a line to your `.bashrc`:
   
-      source /path/to/this/repo/bin/local-aliases.sh
+      echo "source ~/.stubproj/bin/local-aliases.sh" >> ~/.bashrc
+
+### On any remote hosts (servers) that you work with regularly
+
+Stubproj depends on `conda` to install packages and keep project environments separate. So, make sure `conda` is available on your remote server when you open a shell via ssh. Stubproj also assumes you're on Linux (for `/proc`)
+
+    $ ssh myfavoritehost
+    $ which conda
+    /user/jlong/miniconda3/bin/conda
+
+Next, clone this repository into `~/.stubproj` on the *remote* host
+
+    $ git clone https://github.com/josePhoenix/stubproj.git ~/.stubproj
+
+Add a line sourcing the *remote* aliases to your `.bashrc`:
+  
+    echo "source ~/.stubproj/bin/remote-aliases.sh" >> ~/.bashrc
 
 ## Usage
 
 ### Create a new project
 
-    stubproj PROJ_DIR PROJ_NAME PORT
+    stubproj PROJ_HOST PROJ_DIR PROJ_NAME PORT
 
-Example creating a project `newproj` rooted at `/grp/jwst/myfolder` and with a notebook server on port 9900. 
+Example creating a project `newproj` on `myserver` rooted at `/grp/jwst/myfolder` and with a notebook server on port 9900.
 
-    local$ ssh myfavoritehost
-    myfavoritehost$ stubproj /grp/jwst/myfolder newproj 9900
+    local$ stubproj newproj myserver /grp/jwst/myfolder 9900
 
 Follow the instructions provided to configure a password and add `newproj` to your `~/.stubproj_list` on your **local** machine:
 
-    local$ echo "newproj myfavoritehost 9900" >> ~/.stubproj_list
+    local$ echo "newproj myfavoritehost 9900" >> ~/.stubproj/projects
 
 ### Working on `newproj` from a local terminal
 

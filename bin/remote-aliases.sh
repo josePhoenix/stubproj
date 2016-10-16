@@ -1,3 +1,5 @@
+source ~/.stubproj/common.sh
+
 function localproj {
     if [ -z $1 ]; then
         echo "usage: localproj PROJ_NAME"
@@ -7,13 +9,10 @@ function localproj {
         echo "conda command not in \$PATH, aborting"
         return
     fi
-    if [ ! -e ~/workspace/"$PROJ_NAME" ]; then
-        echo "No workspace link to project '$PROJ_NAME'"
-        return
-    fi
+    set_from_proj_name $1
 
     source activate $1
-    cd ~/workspace/"$1"
+    cd "$PROJ_DIR"
 }
 
 function localprojnb {
@@ -25,13 +24,10 @@ function localprojnb {
         echo "conda command not in \$PATH, aborting"
         return  
     fi
-    PROJ_NAME="$1"
-    if [ ! -e ~/workspace/"$PROJ_NAME" ]; then
-        echo "No workspace link to project '$PROJ_NAME'"
-        return
-    fi
+    set_from_proj_name $1
 
     localproj "$PROJ_NAME"
+
     if [ -e ./circus/notebook.pid ]; then
         pid=`cat ./circus/notebook.pid`
         has_pid=1
@@ -52,13 +48,10 @@ function localprojnboff {
         echo "usage: localprojnboff PROJ_NAME"
         return
     fi
-    PROJ_NAME="$1"
-    if [ ! -e ~/workspace/"$PROJ_NAME" ]; then
-        echo "No workspace link to project '$PROJ_NAME'"
-        return
-    fi
+    set_from_proj_name $1
 
     localproj "$PROJ_NAME"
+
     if [ -e ./circus/notebook.pid ]; then
         pid=`cat ./circus/notebook.pid`
         has_pid=1
@@ -72,3 +65,5 @@ function localprojnboff {
         echo "Notebook for $PROJ_NAME was not running"
     fi
 }
+
+alias stubproj="$(HOME)/.stubproj/bin/stubproj"
