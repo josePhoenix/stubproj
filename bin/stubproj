@@ -33,7 +33,11 @@ cp -R ~/.stubproj/skel/* "$PROJ_DIR/"
 # move into directory
 cd "$PROJ_DIR"
 
-conda create -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+if [ $(conda_env_exists $PROJ_NAME) == 1 ]; then
+    conda install -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+else
+    conda create -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+fi
 
 source activate $PROJ_NAME
 
@@ -46,13 +50,20 @@ rm ./populate_jupyter_notebook_config.py
 
 source deactivate $PROJ_NAME
 
-git init .
+if [ ! -d ./.git ]; then
+    git init .
+fi
 
 project_spec="$PROJ_NAME $(hostname) $PROJ_DIR $PORT"
 
 echo "Okay, all set in $PROJ_DIR"
-echo "Appending a line to ~/.stubproj/projects"
-echo $project_spec >> ~/.stubproj/projects
+if [ $(grep $PROJ_NAME ~/.stubproj/projects | wc -l) != 0 ]; then
+    echo "Line already present in ~/.stubproj/projects on $PROJ_HOST:"
+    echo $project_spec
+else
+    echo "Appending a line to ~/.stubproj/projects on $PROJ_HOST:"
+    echo $project_spec >> ~/.stubproj/projects
+fi
 echo
 echo "Add this line to ~/.stubproj/projects on machines where you want to connect to this environment:"
 echo

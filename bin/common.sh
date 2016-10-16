@@ -29,3 +29,7 @@ function show_usage() {
     echo "Example:"
     echo "stubproj newproj science6 /grp/jwst/myfolder 9900"
 }
+
+function conda_env_exists {
+    echo $(conda env list | awk '{ print $1 }' | grep $1 | wc -l)
+}
