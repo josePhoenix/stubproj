@@ -66,19 +66,6 @@ else
     echo "Appending a line to ~/.stubproj/projects on $PROJ_HOST:"
     echo $project_spec >> ~/.stubproj/projects
 fi
-echo
-echo "Add this line to ~/.stubproj/projects on machines where you want to connect to this environment:"
-echo
-echo $project_spec
-echo
-echo "If you haven't set up the shell aliases for this (remote) machine, add them to your bash startup files:"
-echo
-echo "echo \"source ~/.stubproj/bin/remote-aliases.sh\" >> ~/.bashrc"
-echo
-echo "If you haven't set up the shell aliases for your (local) machine, add them to your bash startup files:"
-echo
-cat ~/.stubproj/bin/local-aliases.sh
-echo
 echo "Done!"
 
 # create conda env
