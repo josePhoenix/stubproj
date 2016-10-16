@@ -3,7 +3,7 @@ set -eo pipefail
 # no set -u bc of https://github.com/conda/conda/issues/3200
 source ~/.stubproj/bin/common.sh
 
-if [ "$#" -ne 4 ]; then
+if [ "$#" -lt 4 ]; then
     show_usage
     exit 1
 fi
@@ -67,3 +67,6 @@ else
     echo $project_spec >> ~/.stubproj/projects
 fi
 echo "Done!"
+if [[ "$5" == "--exit" ]]; then
+    exit 0
+fi
