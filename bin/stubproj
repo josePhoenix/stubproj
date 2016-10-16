@@ -1,5 +1,6 @@
 #!/bin/bash
-set -euo pipefail
+set -eo pipefail
+# no set -u bc of https://github.com/conda/conda/issues/3200
 source ~/.stubproj/bin/common.sh
 
 if [ "$#" -ne 4 ]; then
