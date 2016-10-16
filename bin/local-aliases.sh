@@ -47,6 +47,7 @@ function stubproj {
         echo $(grep $PROJ_NAME ~/.stubproj/projects)
     else
         echo "Appending a line to ~/.stubproj/projects locally:"
+        echo $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT
         echo $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT >> ~/.stubproj/projects
     fi
 }

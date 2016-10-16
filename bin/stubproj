@@ -30,9 +30,9 @@ cp -R ~/.stubproj/skel/* "$PROJ_DIR/"
 cd "$PROJ_DIR"
 
 if [ $(conda_env_exists $PROJ_NAME) == 1 ]; then
-    conda install -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+    conda install -n $PROJ_NAME --yes ipython notebook
 else
-    conda create -n $PROJ_NAME --yes --file "./conda_requirements.txt"
+    conda create -n $PROJ_NAME --yes python=3 ipython notebook numpy scipy matplotlib astropy
 fi
 
 source activate $PROJ_NAME
