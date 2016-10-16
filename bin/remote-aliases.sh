@@ -37,8 +37,8 @@ function localprojnb {
     if [ $has_pid -ne 0 ] && [ -e /proc/$pid -a /proc/$pid/exe ]; then
         echo "Notebook for $PROJ_NAME already started as PID $pid"
     else
-        circusd --daemon ./circus/circus.ini && 
-        sleep 2 &&
+        circusd --daemon ./circus/circus.ini && echo "Starting circus to run the notebook..."
+        while ! nc -q 1 localhost $PROJ_PORT </dev/null; do sleep 2; done
         echo "Started notebook for $PROJ_NAME (pid: $(cat ./circus/notebook.pid))"
     fi
 }
