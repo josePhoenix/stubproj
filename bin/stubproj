@@ -28,8 +28,6 @@ for subdir in data notebooks output scratch; do
     mkdir -p "$PROJ_DIR/$subdir"
 done
 
-mkdir -p ~/workspace
-ln -sv "$PROJ_DIR" ~/workspace/"$PROJ_NAME"
 cp -R ~/.stubproj/skel/* "$PROJ_DIR/"
 
 # move into directory
