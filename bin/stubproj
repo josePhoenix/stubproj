@@ -30,7 +30,7 @@ done
 
 mkdir -p ~/workspace
 ln -sv "$PROJ_DIR" ~/workspace/"$PROJ_NAME"
-cp -R "$DIR/../skel/"* "$PROJ_DIR/"
+cp -R "~/.stubproj/skel/"* "$PROJ_DIR/"
 
 # move into directory
 cd "$PROJ_DIR"
