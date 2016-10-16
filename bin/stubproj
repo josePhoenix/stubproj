@@ -44,7 +44,7 @@ rm ./populate_circus.py
 python3 "./populate_jupyter_notebook_config.py" $PORT
 rm ./populate_jupyter_notebook_config.py
 
-source deactivate
+source deactivate $PROJ_NAME
 
 git init .
 
