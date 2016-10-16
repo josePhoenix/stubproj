@@ -4,7 +4,8 @@ function do_remotely {
     host=$1
     command=$2
     # echo "PROJ_HOST=$PROJ_HOST"
-    ssh "$host" -t "bash -x --rcfile <(echo '. ~/.bashrc; $command')"
+    echo "Doing command:" $command "on host:" $host
+    ssh "$host" -t "bash --rcfile <(echo '. ~/.bashrc; $command')"
 }
 
 function proj {
@@ -28,9 +29,9 @@ function stubproj {
         show_usage
         return 1
     fi
+    PROJ_NAME="$1"
     PROJ_HOST=$(resolve_to_ip "$2")
-    PROJ_DIR="$2"
-    PROJ_NAME="$3"
+    PROJ_DIR="$3"
     PORT="$4"
 
     echo "PROJ_HOST=" $PROJ_HOST
@@ -38,5 +39,5 @@ function stubproj {
     echo "PROJ_NAME=" $PROJ_NAME
     echo "PORT=" $PORT
 
-    do_remotely $PROJ_HOST "stubproj $@"
+    do_remotely $PROJ_HOST "stubproj $PROJ_NAME $PROJ_HOST $PROJ_DIR $PROJ_PORT"
 }
