@@ -4,7 +4,7 @@ function do_remotely {
     host=$1
     command=$2
     # echo "PROJ_HOST=$PROJ_HOST"
-    ssh "$host" -t "bash --rcfile <(echo '. ~/.bashrc; $command')"
+    ssh "$host" -t "bash -x --rcfile <(echo '. ~/.bashrc; $command')"
 }
 
 function proj {

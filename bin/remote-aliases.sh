@@ -67,4 +67,4 @@ function localprojnboff {
     fi
 }
 
-alias stubproj="$HOME/.stubproj/bin/stubproj"
+export PATH="$PATH:$HOME/.stubproj/bin/"
