@@ -26,9 +26,9 @@ function projnboff {
 function stubproj {
     if [ "$#" -ne 4 ]; then
         show_usage
-        exit 1
+        return 1
     fi
-    PROJ_HOST=$(resolve_to_ip "$1")
+    PROJ_HOST=$(resolve_to_ip "$2")
     PROJ_DIR="$2"
     PROJ_NAME="$3"
     PORT="$4"

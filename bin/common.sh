@@ -1,3 +1,7 @@
+function resolve_to_ip {
+    echo $(host $1 | awk '/has address/ { print $4 ; exit }')
+}
+
 function set_from_proj_name {
     PROJ_NAME=$1
     if [ -z $PROJ_NAME ]; then
@@ -13,10 +17,10 @@ function set_from_proj_name {
     PROJ_HOST=${PROJ_PARTS[1]}
     PROJ_DIR=${PROJ_DIR[2]}
     PROJ_PORT=${PROJ_PARTS[3]}
-    echo "PROJ_HOST=" $PROJ_HOST
-    echo "PROJ_DIR=" $PROJ_DIR
-    echo "PROJ_NAME=" $PROJ_NAME
-    echo "PORT=" $PORT
+    echo "PROJ_HOST" $PROJ_HOST
+    echo "PROJ_DIR" $PROJ_DIR
+    echo "PROJ_NAME" $PROJ_NAME
+    echo "PORT" $PORT
 }
 
 function show_usage() {

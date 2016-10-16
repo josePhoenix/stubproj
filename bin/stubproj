@@ -1,17 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-
-function show_usage() {
-    echo "stubproj PROJ_NAME PROJ_HOST PROJ_DIR PORT"
-    echo
-    echo "Example:"
-    echo "stubproj newproj science6 /grp/jwst/myfolder 9900"
-}
-
-function resolve_to_ip {
-    result = $(getent hosts "$1" | awk '{ print $1 }')
-    echo $result
-}
+source ~/.stubproj/bin/common.sh
 
 if [ "$#" -ne 4 ]; then
     show_usage
