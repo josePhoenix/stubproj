@@ -61,6 +61,15 @@ Create a project skeleton with the same name:
 
     local$ stubproj lsst myfavoritehost /astro/lsst 9901
 
+Add some customizations for the LSST Stack:
+
+    local$ proj lsst
+    (lsst)myremotehost$ mkdir -p "$CONDA_PREFIX/etc/conda/activate.d"
+    (lsst)myremotehost$ echo "source eups-setups.sh" >> "$CONDA_PREFIX/etc/conda/activate.d/load_eups.sh"
+    (lsst)myremotehost$ echo "setup meas_deblender" >> "$CONDA_PREFIX/etc/conda/activate.d/load_eups.sh"
+
+Now when you run `proj lsst` or `projnb lsst`, you'll get an environment with the LSST Stack installed and their `meas_deblender` package available.
+
 ### Working on `newproj` from a local terminal
 
 Start a new remote terminal in the `newproj` project with:
